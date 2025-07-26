@@ -1,18 +1,35 @@
-
+import { useState, useRef, useEffect } from 'react'
+import HomePage from "./components/HomePage"
+import Header from "./components/Header"
+import FileDisplay from './components/FileDisplay'
 
 function App() {
-  
+  const [file, setFile] = useState(null)  
+  const [audioStream, setAudioStream] = useState(null)
+
+  const isAudioAvailable = file || audioStream
+
+  function handleAudioReset() {
+    setFile(null)
+    setAudioStream(null)
+  }
 
   return (
     <>
-      <div className="flex items-center justify-center h-screen bg-gray-800">
-        <div className="bg-sky-100 p-6 rounded-lg shadow-md">
-          <h1 className="text-2xl font-bold mb-4">Welcome to Free Scribe</h1>
-          <p className="text-gray-700">Your AI-powered writing assistant.</p>
-        </div>
+      <div className="flex flex-col max-w-[1000px] mx-auto w-full">
+        <section className="min-h-screen flex flex-col">
+          <Header /> 
+          {isAudioAvailable ? (
+            <FileDisplay handleAudioReset={handleAudioReset} file={file} audioStream={setAudioStream} />
+          ): (
+            <HomePage setFile = {setFile} setAudioStream = {setAudioStream} />
+          )}
+          </section>
+        <h1 className="text-green-300">hello</h1>
+        <footer></footer>
       </div>
     </>
   )
-}
+} 
 
 export default App  
